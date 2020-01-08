@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,37 +10,42 @@ namespace TaskAbout01011
     {
         static void Main(string[] args)
         {
-            int count = 0;
-            Random rnd = new Random();
-            Random rend = new Random();
-            
-            int[] array = new int[rend.Next(50,100)];
+            Random lenght = new Random();
+            Random value = new Random();
+
+            // Создание массива.
+            int[] array = new int[lenght.Next(50, 100)];
 
             // Заполнение массива.
             for (int i = 0; i < array.Length; i++)
             {
-                int x = rnd.Next(0,2);
-                array[i] = x;
+                array[i] = value.Next(0, 2);
             }
 
             // Вывод на экран.
+
+            int count = 0;
+
             for (int i = 0; i < array.Length; i++)
             {
-                if (i == 0)
-                {
-                    Console.Write($"Нуль по индексу: {i} = ");
-                }
                 if (array[i] == 0 && count != 0)
                 {
-                    Console.Write($"{count}\n");
-                    Console.Write($"Нуль по индексу: {i} = ");
-
+                    if ((i - 1) >= count)  // игнорируем единицы в начале массива
+                    {
+                        Console.Write($"Нуль по индексу: ");
+                        Console.Write($"{(i - 1) - count} = {count}\n");
+                    }
                     count = 0;
                     continue;
                 }
                 else if (array[i] == 1)
                 {
                     count++;
+                    if (i == array.Length - 1)  // учитываем тот факт, когда массив закончивается с единицами
+                    {
+                        Console.Write($"Нуль по индексу: ");
+                        Console.Write($"{i - count} = {count}\n");
+                    }
                 }
             }
             Console.ReadKey();
